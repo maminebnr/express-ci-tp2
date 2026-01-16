@@ -25,7 +25,14 @@ describe("Express API", () => {
  test("GET /products should return ok=true", async () => {
     const res = await request(app).get("/products");
     expect(res.status).toBe(200);
-    expect(res.body.ok).toBe(true);
+    expect(res.body.title).toBe(true);
+  });
+
+  test("POST /products should create a product", async () => {
+    const res = await request(app).post("/products").send({ title: "test product" });
+    expect(res.status).toBe(201);
+    expect(res.body.title).toBe("test product");
+    expect(res.body.id).toBeDefined();
   });
 
   test("POST /products should reject invalid title", async () => {
