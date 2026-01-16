@@ -1,0 +1,16 @@
+//.gitignore node_modules
+node_modules/
+//.gitignore logs
+logs/
+//.gitignore temp files
+*.tmp
+//.gitignore build files
+dist/
+build/
+//.gitignore environment files
+.env
+.env.local
+//.gitignore IDE specific files
+.vscode/
+.idea/*.iml
+.idea/workspace.xml
