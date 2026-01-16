@@ -12,6 +12,11 @@ let products = [
   { id: 1, title: "training products"},
 ];
 
+// 1. Initialize the users array
+let users = [
+  { id: 1, name: "Khalil Abidi", email: "khalilabidi63@gmail.com" },
+];
+
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
@@ -69,6 +74,35 @@ app.delete("/todos/:id", (req, res) => {
 
 app.get("/products", (req, res) => {
   res.json(products);
+});
+
+// --- USERS ROUTES ---
+
+// GET /users - Returns users
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+// POST /users - Creates a new user
+app.post("/users", (req, res) => {
+  const { name, email } = req.body;
+
+  // validation
+  if (!name || name.trim().length < 2) {
+    return res.status(400).json({ error: "name is required (min 2 chars)" });
+  }
+  if (!email || !email.includes("@")) {
+    return res.status(400).json({ error: "valid email is required" });
+  }
+
+  const newUser = {
+    id: Date.now(),
+    name: name.trim(),
+    email: email.trim()
+  };
+
+  users.push(newUser);
+  res.status(201).json(newUser);
 });
 
 module.exports = app;
