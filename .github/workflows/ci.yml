@@ -1,20 +1,34 @@
 name: CI
+
 on:
   push:
     branches: ["main"]
   pull_request:
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
+
+      - name: Check Node & npm version
+        run: |
+          node -v
+          npm -v
+
       - name: Install dependencies
         run: npm ci
+
       - name: Run tests
         run: npm test
+
+      - name: Start Express server (check)
+        run: node server.js
