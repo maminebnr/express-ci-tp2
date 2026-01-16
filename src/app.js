@@ -72,7 +72,7 @@ app.get("/products", (req, res) => {
 });
 
 // Add this array
-let users = [{ id: 1, name: "John Doe", email: "john@example.com" }];
+let command = [{ id: 1, name: "John Doe", email: "john@example.com" }];
 
 // Add these routes at the bottom
 app.get("/users", (req, res) => {
@@ -112,6 +112,27 @@ app.post('/login', (req, res) => {
     } else {
         res.status(401).send('Invalid credentials');
     }
+});
+
+app.get("/command", (req, res) => {
+  res.json(products);
+});
+
+// Add this array
+let users = [{ id: 1, name: "command", email: "command@example.com" }];
+
+// Add these routes at the bottom
+app.get("/command", (req, res) => {
+  res.json(users);
+});
+
+app.post("/command", (req, res) => {
+  const { name, email } = req.body;
+  if (!name) return res.status(400).json({ error: "name is required" });
+  
+  const newUser = { id: Date.now(), name, email };
+  users.push(newUser);
+  res.status(202).json(newUser);
 });
 
 module.exports = app;
