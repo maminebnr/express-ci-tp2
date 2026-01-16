@@ -19,9 +19,16 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - name: Check Node & npm version
+        run: |
+          node -v
+          npm -v
+
       - name: Install dependencies
         run: npm ci
 
       - name: Run tests
         run: npm test
 
+      - name: Start Express server (check)
+        run: node server.js
