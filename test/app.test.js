@@ -63,4 +63,14 @@ test("POST /users should create a new user", async () => {
   expect(res.body.name).toBe("Khalil");
   expect(res.body.id).toBeDefined();
 });
+test("POST /users should create a new command", async () => {
+  const res = await request(app)
+    .post("/users")
+    .send({ name: "command", email: "geturecommand@clevory.com" });
+  
+  expect(res.status).toBe(201);
+  expect(res.body.name).toBe("command");
+  expect(res.body.id).toBeDefined();
+});
+
 });
