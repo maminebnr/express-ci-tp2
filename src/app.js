@@ -2,14 +2,10 @@ const express = require("express");
 const app = express();
 
 app.use(express.json());
-
+/*=========================================================================================================================================*/
 let todos = [
   { id: 1, title: "learn git stash", done: false },
   { id: 2, title: "build express api", done: true },
-];
-
-let products = [
-  { id: 1, title: "training products"},
 ];
 
 app.get("/health", (req, res) => {
@@ -65,10 +61,59 @@ app.delete("/todos/:id", (req, res) => {
 
   res.status(204).send();
 });
+/*==============================================================================================================================================*/
 
+let products = [
+  { id: 1, title: "training products"},
+];
 
 app.get("/products", (req, res) => {
   res.json(products);
+});
+
+app.post("/products", (req, res) => {
+  const { title } = req.body;
+
+  if (!title || title.trim().length < 2) {
+    return res.status(400).json({ error: "title is required (min 2 chars)" });
+  }
+
+  const newProduct = {
+    id: Date.now(),
+    title: title.trim(),
+  };
+
+  products.push(newProduct);
+  res.status(201).json(newProduct);
+});
+
+app.patch("/products/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const products = products.find((t) => t.id === id);
+
+  if (!products) {
+    return res.status(404).json({ error: "products not found" });
+  }
+
+  const { title} = req.body;
+
+  if (title !== undefined) products.title = String(title).trim();
+  
+
+  res.json(products);
+});
+
+app.delete("/products/:id", (req, res) => {
+  const id = Number(req.params.id);
+  const before = todos.length;
+
+  todos = todos.filter((t) => t.id !== id);
+
+  if (todos.length === before) {
+    return res.status(404).json({ error: "products not found" });
+  }
+
+  res.status(204).send();
 });
 
 module.exports = app;
