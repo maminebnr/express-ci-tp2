@@ -8,6 +8,10 @@ let todos = [
   { id: 2, title: "build express api", done: true },
 ];
 
+let products = [
+  { id: 1, title: "training products"},
+];
+
 app.get("/health", (req, res) => {
   res.json({ ok: true });
 });
@@ -60,6 +64,11 @@ app.delete("/todos/:id", (req, res) => {
   }
 
   res.status(204).send();
+});
+
+
+app.get("/products", (req, res) => {
+  res.json(products);
 });
 
 module.exports = app;
