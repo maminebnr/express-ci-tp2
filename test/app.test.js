@@ -40,7 +40,7 @@ describe("Express API", () => {
     expect(res.status).toBe(400);
     expect(res.body.error).toBeDefined();
   });
-});
+
 test("POST /todos should reject invalid title", async () => {
 const res = await request(app).post("/todos").send({ title: ""
 });
@@ -62,4 +62,5 @@ test("POST /users should create a new user", async () => {
   expect(res.status).toBe(201);
   expect(res.body.name).toBe("Khalil");
   expect(res.body.id).toBeDefined();
+});
 });
