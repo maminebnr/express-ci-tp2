@@ -70,7 +70,6 @@ let products = [
 app.get("/products", (req, res) => {
   res.json(products);
 });
-
 app.post("/products", (req, res) => {
   const { title } = req.body;
 
@@ -114,6 +113,22 @@ app.delete("/products/:id", (req, res) => {
   }
 
   res.status(204).send();
+});
+// Add this array
+let users = [{ id: 1, name: "John Doe", email: "john@example.com" }];
+
+// Add these routes at the bottom
+app.get("/users", (req, res) => {
+  res.json(users);
+});
+
+app.post("/users", (req, res) => {
+  const { name, email } = req.body;
+  if (!name) return res.status(400).json({ error: "name is required" });
+  
+  const newUser = { id: Date.now(), name, email };
+  users.push(newUser);
+  res.status(201).json(newUser);
 });
 
 module.exports = app;
